@@ -14,8 +14,10 @@ const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 const { preprocess } = require("./svelte.config");
 const typescriptPlugin = typescript({
   sourceMap: true,
-  // compile on type errors
-  noEmitOnError: false,
+  // true === fail if there is type error and we only want this when building
+  // for production. In development, it assumed our IDE will handle type
+  // checking
+  noEmitOnError: mode === "production",
 });
 
 const onwarn = (warning, onwarn) =>
