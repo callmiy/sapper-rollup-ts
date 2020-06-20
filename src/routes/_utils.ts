@@ -11,8 +11,8 @@ $: if (foo !== null) {
 export const some: Some = {
   a: 1,
   b: "3",
-  c: "three",
-  d: new Date(),
+  // c: "three",
+  // d: new Date(),
 };
 
 interface Some {
