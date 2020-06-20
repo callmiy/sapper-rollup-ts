@@ -1,22 +1,9 @@
-<script lang="ts">
-  /* Could not resolve './_utils.index' from src/routes/index.svelte */
-  /* import {title} from "./_utils.index"; */
+<!--
+if you use lang="ts" or type="typescript", then changes ./utils.index.ts will
+not be picked up on change
+-->
+<script src="./_utils.ts">
 
-  export let title: string = "Hallo Ts";
-
-  interface Some {
-    a: 1;
-    b: "two";
-    c: string;
-    d: Date;
-  }
-
-  const some: Some = {
-    a: 1,
-    b: "two",
-    c: "three",
-    d: new Date()
-  };
 </script>
 
 <style>
@@ -63,6 +50,8 @@
 
 <figure>
   <img alt="Success Kid" src="successkid.jpg" />
+
+  <p>{JSON.stringify(some)}</p>
   <figcaption>Have fun with Sapper!</figcaption>
 </figure>
 

@@ -6,12 +6,17 @@ import babel from "@rollup/plugin-babel";
 import { terser } from "rollup-plugin-terser";
 import config from "sapper/config/rollup.js";
 import pkg from "./package.json";
-import sveltePreprocess from "svelte-preprocess";
+import typescript from "@rollup/plugin-typescript";
 
 const mode = process.env.NODE_ENV;
 const dev = mode === "development";
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
-const preprocess = sveltePreprocess();
+const { preprocess } = require("./svelte.config");
+const typescriptPlugin = typescript({
+  sourceMap: true,
+  // compile on type errors
+  noEmitOnError: false,
+});
 
 const onwarn = (warning, onwarn) =>
   (warning.code === "CIRCULAR_DEPENDENCY" &&
@@ -38,6 +43,7 @@ export default {
         dedupe: ["svelte"],
       }),
       commonjs(),
+      typescriptPlugin,
 
       legacy &&
         babel({
@@ -90,6 +96,7 @@ export default {
         dedupe: ["svelte"],
       }),
       commonjs(),
+      typescriptPlugin,
     ],
     external: Object.keys(pkg.dependencies).concat(
       require("module").builtinModules ||
